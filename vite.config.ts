@@ -6,7 +6,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Unocss from 'unocss/vite'
-import transformerDirective, { TransformerDirectivesOptions } from '@unocss/transformer-directives'
+import transformerDirective from '@unocss/transformer-directives'
 
 const baseSrc = fileURLToPath(new URL('./src', import.meta.url))
 
@@ -47,6 +47,18 @@ export default defineConfig(({ mode }) => {
         transformers: [transformerDirective() as any]
       })
     ],
+    base: '/',
+    build: {
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            lodash: ['lodash-es'],
+            vue: ['vue', 'vue-router', 'pinia', '@vueuse/core']
+          }
+        }
+      }
+    },
     server: {
       port: 4000,
       host: '0.0.0.0',

@@ -57,27 +57,27 @@ const { form, rules, loading, onSubmit } = useLogin()
 </template>
 
 <style scoped lang="less">
-.login-container{
-    @apply min-h-screen bg-indigo-500;
-    .left{
-      @apply flex items-center justify-center;
-        .left-text{
-            div:first-child{
-                @apply font-bold text-5xl text-light-50 mb-4;
-            }
-            div:last-child{
-                @apply text-gray-200 text-sm;
-            }
-        }
+.login-container {
+  @apply min-h-screen bg-indigo-500;
+  .left {
+    @apply flex items-center justify-center;
+    .left-text {
+      div:first-child {
+        @apply font-bold text-5xl text-light-50 mb-4;
+      }
+      div:last-child {
+        @apply text-gray-200 text-sm;
+      }
     }
-    .right{
-        @apply bg-light-50 flex items-center justify-center flex-col;
-        .title{
-            @apply font-bold text-3xl text-gray-800;
-        }
-        .right-text{
-          @apply flex items-center justify-center my-5 text-gray-300 space-x-2;
-        }
+  }
+  .right {
+    @apply bg-light-50 flex items-center justify-center flex-col;
+    .title {
+      @apply font-bold text-3xl text-gray-800;
     }
+    .right-text {
+      @apply flex items-center justify-center my-5 text-gray-300 space-x-2;
+    }
+  }
 }
 </style>

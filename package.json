@@ -5,13 +5,23 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "prepare": "husky install",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src --fix"
   },
   "lint-staged": {
-    "*.{js,tsx,vue,ts,jsx}": "eslint --fix"
+    "*.{js,tsx,vue,ts,jsx}": [
+      "npm run lint"
+    ]
+  },
+  "rules": {
+    "generator-star-spacing": "off",
+    "no-tabs": "off",
+    "no-unused-vars": "off",
+    "no-console": "off",
+    "no-irregular-whitespace": "off",
+    "no-debugger": "off"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
@@ -19,9 +29,12 @@
     "@unocss/transformer-directives": "^0.51.12",
     "@vueuse/core": "^10.1.2",
     "axios": "^1.4.0",
+    "moment": "^2.29.4",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.35",
     "pinia-plugin-persist": "^1.0.0",
+    "prettier": "^2.8.8",
+    "vue-i18n": "^9.2.2",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

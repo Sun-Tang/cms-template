@@ -1,49 +1,56 @@
-import { getInfo, logout } from '@/api/manager'
+import { getMenus } from '@/api'
+import { menuFilter } from '@/utils/index'
 
-export const useUserStore = defineStore('user', () => {
-  const token = ref<string>()
-  const userInfo = ref<any>()
+export const useUserStore = defineStore(
+  'user',
+  () => {
+    const token = ref<string>()
+    const userInfo = ref<any>()
 
-  const setUserInfo = (): void => {
-    getInfo().then((res) => {
-      ElMessage({
-        message: '登录成功.',
-        type: 'success',
+    const setUserMenus = (): void => {
+      getMenus().then(res => {
+        if (res.code === 0) {
+          userInfo.value.menus = menuFilter(res.result)
+          window.location.href = '/'
+          ElMessage({
+            message: '登录成功.',
+            type: 'success'
+          })
+        }
       })
-      userInfo.value = res
-    })
-  }
+    }
 
-  const setToken = (tokenValue: string) => {
-    setUserInfo()
-    token.value = tokenValue
-  }
+    const setToken = (userInfoNew: any) => {
+      token.value = userInfoNew.token
+      userInfo.value = userInfoNew
+      setUserMenus()
+    }
 
-  // 必须加回调不然获取不到router变量
-  const accountLogout = (fn: Function) => {
-    logout().finally(() => {
-      token.value = ''
-      userInfo.value = ''
-      fn()
-      ElMessage({
-        type: 'success',
-        message: '退出成功',
+    // 必须加回调不然获取不到router变量
+    const accountLogout = (fn: Function) => {
+      logout().finally(() => {
+        token.value = ''
+        userInfo.value = ''
+        fn()
+        ElMessage({
+          type: 'success',
+          message: '退出成功'
+        })
       })
-    })
-  }
+    }
 
-  return {
-    token,
-    userInfo,
-    setToken,
-    setUserInfo,
-    accountLogout,
-  }
-}, {
-  persist: {
-    enabled: true,
-    strategies: [
-      { storage: sessionStorage, paths: ['token', 'userInfo'] },
-    ],
+    return {
+      token,
+      userInfo,
+      setToken,
+      setUserMenus,
+      accountLogout
+    }
   },
-})
+  {
+    persist: {
+      enabled: true,
+      strategies: [{ storage: sessionStorage, paths: ['token', 'userInfo'] }]
+    }
+  }
+)

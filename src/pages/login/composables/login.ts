@@ -1,4 +1,4 @@
-import { login } from '@/api/manager'
+import { login } from '@/api'
 import { useUserStore } from '~@/store/user'
 
 export const useLogin = () => {
@@ -8,7 +8,7 @@ export const useLogin = () => {
 
   const form = reactive({
     username: '',
-    password: '',
+    password: ''
   })
 
   const rules = {
@@ -16,33 +16,33 @@ export const useLogin = () => {
       {
         required: true,
         message: '用户名不能为空',
-        trigger: 'blur',
-      },
+        trigger: 'blur'
+      }
     ],
     password: [
       {
         required: true,
         message: '用户名不能为空',
-        trigger: 'blur',
-      },
-    ],
+        trigger: 'blur'
+      }
+    ]
   }
 
   const loading = ref<boolean>(false)
 
   const onSubmit = (loginFormRef: any) => {
     loginFormRef.validate((valid: any) => {
-      if (!valid)
-        return false
+      if (!valid) return false
 
       loading.value = true
       const { username, password } = form
-      login(username, password).then((res: any) => {
-        userStore.setToken(res?.token)
-        router.push('/')
-      }).finally(() => {
-        loading.value = false
-      })
+      login(username, password)
+        .then((res: any) => {
+          userStore.setToken(res.result)
+        })
+        .finally(() => {
+          loading.value = false
+        })
     })
   }
 
@@ -50,6 +50,6 @@ export const useLogin = () => {
     form,
     rules,
     loading,
-    onSubmit,
+    onSubmit
   }
 }

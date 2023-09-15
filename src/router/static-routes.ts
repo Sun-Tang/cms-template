@@ -1,27 +1,27 @@
 import type { RouteRecordRaw } from 'vue-router'
 
+import Layout from '@/layout/layout.vue'
+
 const staticRoutes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'index',
-    component: () => import('~/pages/index.vue'),
-    meta: {
-      title: '后台首页',
-    },
+    name: 'admin',
+    component: Layout,
+    children: []
   },
   {
     path: '/login',
     name: 'login',
     component: () => import('~/pages/login/index.vue'),
     meta: {
-      title: '登录页',
-    },
+      title: '登录页'
+    }
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('~/pages/404.vue'),
-  },
+    component: () => import('~/pages/404.vue')
+  }
 ]
 
 export default staticRoutes
